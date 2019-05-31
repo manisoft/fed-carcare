@@ -12,10 +12,24 @@ class Home extends Component {
         }
     }
 
+    refuelHalnder = (event) => {
+        event.preventDefault();
+    }
+
+    serviceHalnder = (event) => {
+        event.preventDefault();
+    }
+
     render() {
         return (
             <div className={classes.Home}>
-                <p>Home Page</p>
+                <div>Car info</div>
+                <div>Average</div>
+                <div>Cost</div>
+                <span>
+                    <button onClick={this.refuelHalnder}>Refuel</button>
+                    <button onClick={this.serviceHalnder}>Service</button>
+                </span>
             </div>
         );
     }

@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Signin.module.css';
 import Textbox from '../../UI/textbox/Textbox';
 import Button from '../../UI/button/Button';
+import { Link } from 'react-router-dom';
 
 const signin = (props) => {
     return (
@@ -21,7 +22,7 @@ const signin = (props) => {
                     label={'Sign In'}
                 />
             </form>
-            <p>Do not have account<Link to='/signin'>Sign-Up</Link>now</p>
+            <Link className={classes.link} to='/'>Do not have account Sign-Up now</Link>
         </div>
     );
 }

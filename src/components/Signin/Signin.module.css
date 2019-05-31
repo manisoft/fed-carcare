@@ -8,3 +8,8 @@ margin-top: 10px;
     display: flex;
     flex-direction: column;
 }
+
+.link{
+    text-decoration: none;
+    font-size: .8em;
+}

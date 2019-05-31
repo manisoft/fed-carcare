@@ -1,15 +1,10 @@
-.Signup{
+.Cardata{
     width: 80%;
     margin: auto;
     margin-top: 10px;
-    }
-    
+}
+  
 .form{
     display: flex;
     flex-direction: column;
-}
-
-.link{
-    text-decoration: none;
-    font-size: .8em;
 }

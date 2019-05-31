@@ -4,6 +4,8 @@ import Signup from '../../components/Signup/Signup';
 import Signin from '../../components/Signin/Signin';
 import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import Cardata from '../../components/Cardata/Cardata';
+import Home from '../Home/Home';
 
 class App extends Component {
 
@@ -21,45 +23,64 @@ class App extends Component {
     }
   }
 
-  signInHandler = (event)=> {
+  signInHandler = (event) => {
     event.preventDefault();
-    const user={
-      email:this.state.user.email,
-      password:this.state.user.password
+    const user = {
+      email: this.state.user.email,
+      password: this.state.user.password
     }
-    axios.post('https://carcarepwa.herokuapp.com/user/signin',user)
-    .then(res=>{
-      console.log(res.data.message);
-      const token = res.data.token;
-      console.log(token);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+    axios.post('https://carcarepwa.herokuapp.com/user/signin', user)
+      .then(res => {
+        console.log(res.data.message);
+        const token = res.data.token;
+        console.log(token);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
-signUpHandler=(event)=>{
-  event.preventDefault();
-/*   const cardata={
-    name: this.state.cardata.name,
-    model: this.state.cardata.model,
-    yearOfBuild: this.state.cardata.yearOfBuild,
-    odometer:this.state.cardata.odometer,
-    gasolineCapacity:this.state.cardata.gasolineCapacity
-  } */
-  const user={
-    email:this.state.user.email,
-    password:this.state.user.password
+  signUpHandler = (event) => {
+    event.preventDefault();
+    /*   const cardata={
+        name: this.state.cardata.name,
+        model: this.state.cardata.model,
+        yearOfBuild: this.state.cardata.yearOfBuild,
+        odometer:this.state.cardata.odometer,
+        gasolineCapacity:this.state.cardata.gasolineCapacity
+      } */
+    const user = {
+      email: this.state.user.email,
+      password: this.state.user.password
+    }
+    axios.post('https://carcarepwa.herokuapp.com/user/signup', user)
+      .then(res => {
+        console.log(res.data.message);
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
-  axios.post('https://carcarepwa.herokuapp.com/user/signup',user)
-  .then(res=>{
-    console.log(res.data.message);
-    console.log(res);
-  })
-  .catch(err=>{
-    console.log(err);
-  })
-}
+
+  carDataHandler = (event) => {
+    event.preventDefault();
+    const cardata = {
+      name: this.state.cardata.name,
+      model: this.state.cardata.model,
+      yearOfBuild: this.state.cardata.yearOfBuild,
+      odometer: this.state.cardata.odometer,
+      gasolineCapacity: this.state.cardata.gasolineCapacity
+    }
+    axios.post('https://carcarepwa.herokuapp.com/cardata', cardata)
+      .then(res => {
+        console.log(res.data.message);
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
 
   render() {
@@ -69,6 +90,8 @@ signUpHandler=(event)=>{
           {/* <Signin signInHandler = {this.signInHandler}/> */}
           <Route path='/' exact component={Signup} />
           <Route path='/signin' component={Signin} />
+          <Route path='/cardata' component={Cardata} />
+          <Route path='/home' component={Home} />
         </Switch>
 
       </div>
