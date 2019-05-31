@@ -1,4 +1,10 @@
 .Signup{
-    display: flex;
-    flex-flow: column;
-}
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+    }
+    
+    .form{
+        display: flex;
+        flex-direction: column;
+    }

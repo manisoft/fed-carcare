@@ -6,8 +6,8 @@ import Button from '../../UI/button/Button';
 const signin = (props) => {
     return (
         <div className={classes.Signin}>
-            <img src="https://via.placeholder.com/150x150" alt="test" />
-            <form className={classes.form}>
+            <img src="https://via.placeholder.com/150x150" alt="CarCare" />
+            <form className={classes.form} onSubmit={props.signInHandler}>
                 <Textbox
                     type={'email'}
                     placeholder={'E-mail Address'}
@@ -21,6 +21,7 @@ const signin = (props) => {
                     label={'Sign In'}
                 />
             </form>
+            <p>Do not have account<Link to='/signin'>Sign-Up</Link>now</p>
         </div>
     );
 }
