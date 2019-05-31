@@ -82,14 +82,27 @@ class App extends Component {
       })
   }
 
+  emailHandler = (event) => {
+    this.setState({
+      user: {
+        email: event.target.value
+      }
+    })
+
+  }
 
   render() {
     return (
       <div className={classes.App}>
         <Switch>
-          {/* <Signin signInHandler = {this.signInHandler}/> */}
-          <Route path='/' exact component={Signup} />
-          <Route path='/signin' component={Signin} />
+          <Route
+            path='/' exact
+            render={() => (<Signup emailHandler={this.emailHandler} />)}
+          />
+          <Route
+            path='/signin'
+            render={() => (<Signin signInHandler={this.signInHandler} />)}
+          />
           <Route path='/cardata' component={Cardata} />
           <Route path='/home' component={Home} />
         </Switch>

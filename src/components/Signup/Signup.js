@@ -9,7 +9,10 @@ const signup = (props) => {
         <div className={classes.Signup}>
             <img src="https://via.placeholder.com/150x150" alt="CarCare" />
             <form className={classes.form} onSubmit={props.signUpHandler}>
-                <Textbox type='email' placeholder='E-mail Address' />
+                <Textbox
+                    type='email'
+                    placeholder='E-mail Address'
+                    onChange={props.emailHandler} />
                 <Textbox type='password' placeholder='Password' />
                 <Textbox type='password' placeholder='Confirm Password' />
                 <Button type='submit' label={'Sign Up'} />
