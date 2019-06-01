@@ -10,30 +10,29 @@ import Home from '../Home/Home';
 class App extends Component {
 
   state = {
-    cardata: {
-      name: '',
-      model: '',
-      yearOfBuild: 0,
-      odometer: 0,
-      gasolineCapacity: 0
-    },
-    user: {
-      email: 'mani.co@live.com',
-      password: '2064052901'
-    }
+    name: '',
+    model: '',
+    yearOfBuild: 0,
+    odometer: 0,
+    gasolineCapacity: 0,
+    email: '',
+    password: '',
+    passwordc: '',
+    token: ''
   }
 
   signInHandler = (event) => {
     event.preventDefault();
     const user = {
-      email: this.state.user.email,
-      password: this.state.user.password
+      email: this.state.email,
+      password: this.state.password
     }
     axios.post('https://carcarepwa.herokuapp.com/user/signin', user)
       .then(res => {
         console.log(res.data.message);
-        const token = res.data.token;
-        console.log(token);
+        this.setState({
+          token: res.data.token
+        });
       })
       .catch(err => {
         console.log(err);
@@ -42,35 +41,32 @@ class App extends Component {
 
   signUpHandler = (event) => {
     event.preventDefault();
-    /*   const cardata={
-        name: this.state.cardata.name,
-        model: this.state.cardata.model,
-        yearOfBuild: this.state.cardata.yearOfBuild,
-        odometer:this.state.cardata.odometer,
-        gasolineCapacity:this.state.cardata.gasolineCapacity
-      } */
-    const user = {
-      email: this.state.user.email,
-      password: this.state.user.password
+    if (this.state.password === this.state.passwordc) {
+      const user = {
+        email: this.state.email,
+        password: this.state.password
+      }
+      axios.post('https://carcarepwa.herokuapp.com/user/signup', user)
+        .then(res => {
+          console.log(res.data.message);
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    } else {
+      alert('Password Fields Data Does Not Match! Please Check It!');
     }
-    axios.post('https://carcarepwa.herokuapp.com/user/signup', user)
-      .then(res => {
-        console.log(res.data.message);
-        console.log(res);
-      })
-      .catch(err => {
-        console.log(err);
-      })
   }
 
   carDataHandler = (event) => {
     event.preventDefault();
     const cardata = {
-      name: this.state.cardata.name,
-      model: this.state.cardata.model,
-      yearOfBuild: this.state.cardata.yearOfBuild,
-      odometer: this.state.cardata.odometer,
-      gasolineCapacity: this.state.cardata.gasolineCapacity
+      name: this.state.name,
+      model: this.state.model,
+      yearOfBuild: this.state.yearOfBuild,
+      odometer: this.state.odometer,
+      gasolineCapacity: this.state.gasolineCapacity
     }
     axios.post('https://carcarepwa.herokuapp.com/cardata', cardata)
       .then(res => {
@@ -84,11 +80,23 @@ class App extends Component {
 
   emailHandler = (event) => {
     this.setState({
-      user: {
-        email: event.target.value
-      }
-    })
+      ...this.state,
+      email: event.target.value
+    });
+  }
 
+  passwordHandler = (event) => {
+    this.setState({
+      ...this.state,
+      password: event.target.value
+    })
+  }
+
+  passwordcHandler = (event) => {
+    this.setState({
+      ...this.state,
+      passwordc: event.target.value
+    })
   }
 
   render() {
@@ -97,11 +105,19 @@ class App extends Component {
         <Switch>
           <Route
             path='/' exact
-            render={() => (<Signup emailHandler={this.emailHandler} />)}
+            render={() => (<Signup
+              signUpHandler={this.signUpHandler}
+              emailHandler={this.emailHandler}
+              passwordHandler={this.passwordHandler}
+              passwordcHandler={this.passwordcHandler} />)}
           />
           <Route
             path='/signin'
-            render={() => (<Signin signInHandler={this.signInHandler} />)}
+            render={() => (<Signin
+              signInHandler={this.signInHandler}
+              emailHandler={this.emailHandler}
+              passwordHandler={this.passwordHandler}
+            />)}
           />
           <Route path='/cardata' component={Cardata} />
           <Route path='/home' component={Home} />

@@ -12,10 +12,12 @@ const signin = (props) => {
                 <Textbox
                     type={'email'}
                     placeholder={'E-mail Address'}
+                    onChange={props.emailHandler}
                 />
                 <Textbox
                     type={'password'}
                     placeholder={'Password'}
+                    onChange={props.passwordHandler}
                 />
                 <Button
                     type={'submit'}

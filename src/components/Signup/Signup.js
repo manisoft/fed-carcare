@@ -13,8 +13,14 @@ const signup = (props) => {
                     type='email'
                     placeholder='E-mail Address'
                     onChange={props.emailHandler} />
-                <Textbox type='password' placeholder='Password' />
-                <Textbox type='password' placeholder='Confirm Password' />
+                <Textbox
+                    type='password'
+                    placeholder='Password'
+                    onChange={props.passwordHandler} />
+                <Textbox
+                    type='password'
+                    placeholder='Confirm Password'
+                    onChange={props.passwordcHandler} />
                 <Button type='submit' label={'Sign Up'} />
             </form>
             <Link className={classes.link} to='/signin'>Already have an account Sign-In here</Link>
