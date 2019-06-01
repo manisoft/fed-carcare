@@ -6,6 +6,9 @@ import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Cardata from '../../components/Cardata/Cardata';
 import Home from '../Home/Home';
+import Refuel from '../../components/Refuel/Refuel';
+import Service from '../../components/Service/Service';
+import Admin from '../Admin/Admin';
 
 class App extends Component {
 
@@ -29,10 +32,32 @@ class App extends Component {
     }
     axios.post('https://carcarepwa.herokuapp.com/user/signin', user)
       .then(res => {
-        console.log(res.data.message);
         this.setState({
-          token: res.data.token
+          ...this.state,
+          token: res.data.token,
         });
+        const config = {
+          headers: { 'Authorization': 'Bearer ' + this.state.token }
+        }
+        axios.get('https://carcarepwa.herokuapp.com/cardata/query/user', config)
+          .then(res => {
+            if (res.data.length > 0) {
+              this.setState({
+                ...this.state,
+                name: res.data[0].name,
+                model: res.data[0].model,
+                yearOfBuild: res.data[0].yearOfBuild,
+                odometer: res.data[0].odometer,
+                gasolineCapacity: res.data[0].gasolineCapacity
+              });
+              this.props.history.push('/home');
+            } else {
+              this.props.history.push('/cardata');
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
       })
       .catch(err => {
         console.log(err);
@@ -49,7 +74,7 @@ class App extends Component {
       axios.post('https://carcarepwa.herokuapp.com/user/signup', user)
         .then(res => {
           console.log(res.data.message);
-          console.log(res);
+          this.props.history.push('/signin');
         })
         .catch(err => {
           console.log(err);
@@ -61,6 +86,9 @@ class App extends Component {
 
   carDataHandler = (event) => {
     event.preventDefault();
+    const config = {
+      headers: { 'Authorization': 'Bearer ' + this.state.token }
+    }
     const cardata = {
       name: this.state.name,
       model: this.state.model,
@@ -68,10 +96,9 @@ class App extends Component {
       odometer: this.state.odometer,
       gasolineCapacity: this.state.gasolineCapacity
     }
-    axios.post('https://carcarepwa.herokuapp.com/cardata', cardata)
+    axios.post('https://carcarepwa.herokuapp.com/cardata', cardata, config)
       .then(res => {
-        console.log(res.data.message);
-        console.log(res);
+        this.props.history.push('/home');
       })
       .catch(err => {
         console.log(err);
@@ -99,6 +126,45 @@ class App extends Component {
     })
   }
 
+  nameHandler = (event) => {
+    this.setState({
+      ...this.state,
+      name: event.target.value
+    })
+  }
+
+  modelHandler = (event) => {
+    this.setState({
+      ...this.state,
+      model: event.target.value
+    })
+  }
+
+  yrbHandler = (event) => {
+    this.setState({
+      ...this.state,
+      yearOfBuild: event.target.value
+    })
+  }
+
+
+  capacityHandler = (event) => {
+    this.setState({
+      ...this.state,
+      gasolineCapacity: event.target.value
+    })
+  }
+
+
+  odometerHandler = (event) => {
+    this.setState({
+      ...this.state,
+      odometer: event.target.value
+    })
+  }
+
+
+
   render() {
     return (
       <div className={classes.App}>
@@ -119,10 +185,19 @@ class App extends Component {
               passwordHandler={this.passwordHandler}
             />)}
           />
-          <Route path='/cardata' component={Cardata} />
+          <Route path='/cardata' render={() => (<Cardata
+            nameHandler={this.nameHandler}
+            modelHandler={this.modelHandler}
+            yrbHandler={this.yrbHandler}
+            capacityHandler={this.capacityHandler}
+            odometerHandler={this.odometerHandler}
+            carDataHandler={this.carDataHandler}
+          />)} />
+          <Route path='/admin' component={Admin} />
           <Route path='/home' component={Home} />
+          <Route path='/refuel' component={Refuel} />
+          <Route path='/service' component={Service} />
         </Switch>
-
       </div>
     );
   }
