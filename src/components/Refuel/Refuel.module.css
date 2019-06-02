@@ -1,3 +1,14 @@
 .Refuel{
-    
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.back{
+    cursor: pointer;
 }

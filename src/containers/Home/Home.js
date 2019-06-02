@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import classes from './Home.module.css';
+import Refuel from '../../components/Refuel/Refuel';
+import Service from '../../components/Service/Service';
 
 class Home extends Component {
 
@@ -23,27 +25,91 @@ class Home extends Component {
         wiperFluidService: false
     }
 
-    refuelHalnder = (event) => {
+    refuel = (event) => {
         event.preventDefault();
-        this.props.history.push('/refuel');
+        this.props.history.push('/home/refuel');
     }
 
-    serviceHalnder = (event) => {
+    service = (event) => {
         event.preventDefault();
-        this.props.history.push('/service');
+        this.props.history.push('/home/service');
+    }
+
+    refuelHandler = (event) => {
+        event.preventDefault();
+        console.log(this.state);
+    }
+
+    serviceHandler = (event) => {
+        event.preventDefault();
+    }
+
+    fuelAmountHandler = (event) => {
+        this.setState({
+            ...this.state,
+            fuelAmount: event.target.value
+        });
+    }
+
+    fuelPriceHandler = (event) => {
+        this.setState({
+            ...this.state,
+            fuelPrice: event.target.value
+        });
+    }
+
+    refuelDateHandler = (event) => {
+        this.setState({
+            ...this.state,
+            refuelDate: event.target.value
+        });
+    }
+
+    refuelOdometerHandler = (event) => {
+        this.setState({
+            ...this.state,
+            refuelOdometer: event.target.value
+        });
+    }
+
+    isfullHandler = () => {
+        if (this.state.isfull === true) {
+            this.setState({
+                ...this.state,
+                isfull: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                isfull: true
+            });
+        }
     }
 
     render() {
+        let page = (<div className={classes.Home}>
+            <div>Car info</div>
+            <div>Average</div>
+            <div>Cost</div>
+            <span>
+                <button onClick={this.refuel}>Refuel</button>
+                <button onClick={this.service}>Service</button>
+            </span>
+        </div>)
+        if (this.props.location.pathname === '/home/service') {
+            page = <Service
+                serviceHandler={this.serviceHandler} />
+        } else if (this.props.location.pathname === '/home/refuel') {
+            page = <Refuel
+                refuelHandler={this.refuelHandler}
+                fuelAmountHandler={this.fuelAmountHandler}
+                fuelPriceHandler={this.fuelPriceHandler}
+                refuelDateHandler={this.refuelDateHandler}
+                refuelOdometerHandler={this.refuelOdometerHandler}
+                isfullHandler={this.isfullHandler} />
+        }
         return (
-            <div className={classes.Home}>
-                <div>Car info</div>
-                <div>Average</div>
-                <div>Cost</div>
-                <span>
-                    <button onClick={this.refuelHalnder}>Refuel</button>
-                    <button onClick={this.serviceHalnder}>Service</button>
-                </span>
-            </div>
+            page
         );
     }
 }

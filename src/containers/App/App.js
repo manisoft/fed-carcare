@@ -6,8 +6,6 @@ import { Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 import Cardata from '../../components/Cardata/Cardata';
 import Home from '../Home/Home';
-import Refuel from '../../components/Refuel/Refuel';
-import Service from '../../components/Service/Service';
 import Admin from '../Admin/Admin';
 
 class App extends Component {
@@ -195,8 +193,6 @@ class App extends Component {
           />)} />
           <Route path='/admin' component={Admin} />
           <Route path='/home' component={Home} />
-          <Route path='/refuel' component={Refuel} />
-          <Route path='/service' component={Service} />
         </Switch>
       </div>
     );
