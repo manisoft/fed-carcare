@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import classes from './Home.module.css';
 import Refuel from '../../components/Refuel/Refuel';
 import Service from '../../components/Service/Service';
+import axios from 'axios';
 
 class Home extends Component {
 
@@ -22,7 +23,7 @@ class Home extends Component {
         airFilterService: false,
         batteryService: false,
         gearboxOilService: false,
-        wiperFluidService: false
+        wiperFluidService: false,
     }
 
     refuel = (event) => {
@@ -37,7 +38,6 @@ class Home extends Component {
 
     refuelHandler = (event) => {
         event.preventDefault();
-        console.log(this.state);
     }
 
     serviceHandler = (event) => {
@@ -86,6 +86,133 @@ class Home extends Component {
         }
     }
 
+    engineOilServiceHandler = () => {
+        if (this.state.engineOilService === true) {
+            this.setState({
+                ...this.state,
+                engineOilService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                engineOilService: true
+            });
+        }
+    }
+    radiatorServiceHandler = () => {
+        if (this.state.radiatorService === true) {
+            this.setState({
+                ...this.state,
+                radiatorService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                radiatorService: true
+            });
+        }
+    }
+    oilFilterServiceHandler = () => {
+        if (this.state.oilFilterService === true) {
+            this.setState({
+                ...this.state,
+                oilFilterService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                oilFilterService: true
+            });
+        }
+    }
+    airFilterServiceHandler = () => {
+        if (this.state.airFilterService === true) {
+            this.setState({
+                ...this.state,
+                airFilterService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                airFilterService: true
+            });
+        }
+    }
+    batteryServiceHandler = () => {
+        if (this.state.batteryService === true) {
+            this.setState({
+                ...this.state,
+                batteryService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                batteryService: true
+            });
+        }
+    }
+    gearboxOilServiceHandler = () => {
+        if (this.state.gearboxOilService === true) {
+            this.setState({
+                ...this.state,
+                gearboxOilService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                gearboxOilService: true
+            });
+        }
+    }
+    wiperFluidServiceHandler = () => {
+        if (this.state.wiperFluidService === true) {
+            this.setState({
+                ...this.state,
+                wiperFluidService: false
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                wiperFluidService: true
+            });
+        }
+    }
+
+    serviceCenterHandler = (event) => {
+        this.setState({
+            ...this.state,
+            serviceCenter: event.target.value
+        })
+    }
+
+    servicePriceHandler = (event) => {
+        this.setState({
+            ...this.status,
+            servicePrice: event.target.value
+        })
+    }
+
+    serviceOdometerHandler = (event) => {
+        this.setState({
+            ...this.status,
+            serviceOdometer: event.target.value
+        })
+    }
+
+    nextOilReminderHandler = (event) => {
+        this.setState({
+            ...this.status,
+            nextOilReminder: event.target.value
+        })
+    }
+
+    serviceDateHandler = (event) => {
+        this.setState({
+            ...this.state,
+            serviceDate: event.target.value
+        });
+    }
+
     render() {
         let page = (<div className={classes.Home}>
             <div>Car info</div>
@@ -98,7 +225,20 @@ class Home extends Component {
         </div>)
         if (this.props.location.pathname === '/home/service') {
             page = <Service
-                serviceHandler={this.serviceHandler} />
+                serviceHandler={this.serviceHandler}
+                engineOilServiceHandler={this.engineOilServiceHandler}
+                radiatorServiceHandler={this.radiatorServiceHandler}
+                oilFilterServiceHandler={this.oilFilterServiceHandler}
+                airFilterServiceHandler={this.airFilterServiceHandler}
+                batteryServiceHandler={this.batteryServiceHandler}
+                gearboxOilServiceHandler={this.gearboxOilServiceHandler}
+                wiperFluidServiceHandler={this.wiperFluidServiceHandler}
+                serviceCenterHandler={this.serviceCenterHandler}
+                servicePriceHandler={this.servicePriceHandler}
+                serviceOdometerHandler={this.serviceOdometerHandler}
+                nextOilReminderHandler={this.nextOilReminderHandler}
+                serviceDateHandler={this.serviceDateHandler}
+            />
         } else if (this.props.location.pathname === '/home/refuel') {
             page = <Refuel
                 refuelHandler={this.refuelHandler}

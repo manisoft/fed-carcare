@@ -13,56 +13,56 @@ const service = (props) => {
                 <img src="https://via.placeholder.com/75x75" alt="CarCare" />
                 <form className={classes.form} onSubmit={props.serviceHandler}>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'engineOilService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.engineOilServiceHandler}
                         />Oil Changed
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'radiatorService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.radiatorServiceHandler}
                         />Radiator Fluid Checked
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'oilFilterService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.oilFilterServiceHandler}
                         />Oil Filter Changed
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'airFilterService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.airFilterServiceHandler}
                         />Air Filter Changed
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'batteryService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.batteryServiceHandler}
                         />Battery Checked
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'gearboxOilService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.gearboxOilServiceHandler}
                         />Gearbox Oil Checked
                     </span>
                     <span>
-                        <Textbox
-                            type={'checkbox'}
-                            name={'wiperFluidService'}
+                        <input
+                            type='checkbox'
+                            value='false'
                             onChange={props.wiperFluidServiceHandler}
                         />Wiper Fluid Checked
                     </span>
-                    <select className={classes.select}>
-                        <option value="">Please choose an option</option>
+                    <select className={classes.select} onChange={props.serviceCenterHandler}>
+                        <option value="Unregistered Service Center">Unregistered Service Center</option>
                         <option value="Bijan">Bijan</option>
                         <option value="Samuel">Samuel</option>
                     </select>

@@ -7,6 +7,8 @@ import axios from 'axios';
 import Cardata from '../../components/Cardata/Cardata';
 import Home from '../Home/Home';
 import Admin from '../Admin/Admin';
+//import { connect } from 'react-redux';
+//import { getCarData } from '../../store/actions';
 
 class App extends Component {
 
@@ -192,11 +194,31 @@ class App extends Component {
             carDataHandler={this.carDataHandler}
           />)} />
           <Route path='/admin' component={Admin} />
-          <Route path='/home' component={Home} />
+          <Route path='/home' render={() => (<Home
+            {...this.props}
+            name={this.state.name}
+            model={this.state.model}
+            yearOfBuild={this.state.yearOfBuild}
+            odometer={this.state.odometer}
+            gasolineCapacity={this.state.gasolineCapacity}
+            token={this.state.token}
+          />)} />
         </Switch>
       </div>
     );
   }
 }
+
+/* const mapStateToProps = state => {
+  return {
+    cardata: state.initialState
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetCardata: () => dispatch(getCarData())
+  }
+} */
 
 export default App;
