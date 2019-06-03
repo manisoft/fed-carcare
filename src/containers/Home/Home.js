@@ -38,10 +38,51 @@ class Home extends Component {
 
     refuelHandler = (event) => {
         event.preventDefault();
+        const config = {
+            headers: { 'Authorization': 'Bearer ' + this.props.token }
+        }
+        const refuel = {
+            gasoline: this.state.fuelAmount,
+            price: this.state.fuelPrice,
+            odometer: this.state.refuelOdometer,
+            date: this.state.refuelDate,
+            isFull: this.state.isfull
+        }
+        axios.post('https://carcarepwa.herokuapp.com/refuel', refuel, config)
+            .then(res => {
+                this.props.history.push('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     serviceHandler = (event) => {
         event.preventDefault();
+        const config = {
+            headers: { 'Authorization': 'Bearer ' + this.props.token }
+        }
+        const service = {
+            engineOil: this.state.engineOilService,
+            oilFilter: this.state.oilFilterService,
+            airFilter: this.state.airFilterService,
+            gearboxOil: this.state.gearboxOilService,
+            wiperFluid: this.state.wiperFluidService,
+            battery: this.state.batteryService,
+            radiator: this.state.radiatorService,
+            serviceOdometer: this.state.serviceOdometer,
+            price: this.state.servicePrice,
+            date: this.state.serviceDate,
+            nextOilReminder: this.state.nextOilReminder,
+            seviceCenter: this.state.serviceCenter
+        }
+        axios.post('https://carcarepwa.herokuapp.com/service', service, config)
+            .then(res => {
+                this.props.history.push('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     fuelAmountHandler = (event) => {
@@ -214,10 +255,15 @@ class Home extends Component {
     }
 
     render() {
+        const carname = this.props.name;
+        const carmodel = this.props.model;
+        const yearOfBuild = this.props.yearOfBuild;
         let page = (<div className={classes.Home}>
-            <div>Car info</div>
-            <div>Average</div>
-            <div>Cost</div>
+            <div>
+                <span>{carname} - {carmodel} - {yearOfBuild}</span>
+            </div>
+            <div>Average Fuel Consumption per 100 Km</div>
+            <div>Average Cost Per Month (Fuel & Service)</div>
             <span>
                 <button onClick={this.refuel}>Refuel</button>
                 <button onClick={this.service}>Service</button>

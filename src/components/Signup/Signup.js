@@ -3,11 +3,13 @@ import classes from './Signup.module.css';
 import { Link } from 'react-router-dom';
 import Button from '../../UI/button/Button';
 import Textbox from '../../UI/textbox/Textbox';
+import Logo from '../Logo/Logo';
+
 
 const signup = (props) => {
     return (
         <div className={classes.Signup}>
-            <img src="https://via.placeholder.com/150x150" alt="CarCare" />
+            <Logo />
             <form className={classes.form} onSubmit={props.signUpHandler}>
                 <Textbox
                     type='email'

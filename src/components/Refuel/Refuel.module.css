@@ -11,4 +11,11 @@
 
 .back{
     cursor: pointer;
+    width: 75px;
+    height: auto;
+}
+
+.gas{
+    width: 75px;
+    height: auto;
 }

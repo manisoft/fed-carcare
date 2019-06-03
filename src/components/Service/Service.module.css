@@ -11,6 +11,13 @@
 
 .back{
     cursor: pointer;
+    width: 75px;
+    height: auto;
+}
+
+.oil{
+    width: 75px;
+    height: auto;
 }
 
 .select option{

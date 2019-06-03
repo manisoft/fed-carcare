@@ -3,11 +3,13 @@ import classes from './Signin.module.css';
 import Textbox from '../../UI/textbox/Textbox';
 import Button from '../../UI/button/Button';
 import { Link } from 'react-router-dom';
+import Logo from '../Logo/Logo';
+
 
 const signin = (props) => {
     return (
         <div className={classes.Signin}>
-            <img src="https://via.placeholder.com/150x150" alt="CarCare" />
+            <Logo />
             <form className={classes.form} onSubmit={props.signInHandler}>
                 <Textbox
                     type={'email'}

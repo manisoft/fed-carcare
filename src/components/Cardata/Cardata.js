@@ -2,11 +2,13 @@ import React from 'react';
 import classes from './Cardata.module.css';
 import Button from '../../UI/button/Button';
 import Textbox from '../../UI/textbox/Textbox';
+import Logo from '../Logo/Logo';
+
 
 const cardata = (props) => {
     return (
         <div className={classes.Cardata}>
-            <img src="https://via.placeholder.com/150x150" alt="CarCare" />
+            <Logo />
             <form className={classes.form} onSubmit={props.carDataHandler}>
                 <Textbox
                     type='text'

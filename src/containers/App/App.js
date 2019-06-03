@@ -98,6 +98,7 @@ class App extends Component {
     }
     axios.post('https://carcarepwa.herokuapp.com/cardata', cardata, config)
       .then(res => {
+        console.log(res);
         this.props.history.push('/home');
       })
       .catch(err => {
