@@ -74,7 +74,7 @@ const service = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'0.01'}
-                        maxLength={'10'}
+                        max={'1000000'}
                         placeholder={'Service Price'}
                         onChange={props.servicePriceHandler}
                     />
@@ -82,7 +82,7 @@ const service = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'1'}
-                        maxLength={'10'}
+                        max={'1000000'}
                         placeholder={'Service Odometer'}
                         onChange={props.serviceOdometerHandler}
                     />
@@ -90,7 +90,7 @@ const service = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'1'}
-                        maxLength={'10'}
+                        max={'50000'}
                         placeholder={'Next Oil Reminder'}
                         onChange={props.nextOilReminderHandler}
                     />

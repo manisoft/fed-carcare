@@ -20,7 +20,7 @@ const refuel = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'0.1'}
-                        maxLength={'3'}
+                        max={'200'}
                         placeholder={'Fuel Amount (Litre)'}
                         onChange={props.fuelAmountHandler}
                     />
@@ -28,7 +28,7 @@ const refuel = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'0.01'}
-                        maxLength={'10'}
+                        max={'1000000'}
                         placeholder={'Fuel Price'}
                         onChange={props.fuelPriceHandler}
                     />
@@ -36,7 +36,7 @@ const refuel = (props) => {
                         type={'number'}
                         min={'0'}
                         step={'1'}
-                        maxLength={'10'}
+                        max={'1000000'}
                         placeholder={'Refuel Odometer'}
                         onChange={props.refuelOdometerHandler}
                     />
