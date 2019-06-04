@@ -12,16 +12,19 @@ const signup = (props) => {
             <Logo />
             <form className={classes.form} onSubmit={props.signUpHandler}>
                 <Textbox
-                    type='email'
-                    placeholder='E-mail Address'
+                    type={'email'}
+                    placeholder={'E-mail Address'}
+                    maxLength={'30'}
                     onChange={props.emailHandler} />
                 <Textbox
-                    type='password'
-                    placeholder='Password'
+                    type={'password'}
+                    placeholder={'Password'}
+                    maxLength={'30'}
                     onChange={props.passwordHandler} />
                 <Textbox
-                    type='password'
-                    placeholder='Confirm Password'
+                    type={'password'}
+                    placeholder={'Confirm Password'}
+                    maxLength={'30'}
                     onChange={props.passwordcHandler} />
                 <Button type='submit' label={'Sign Up'} />
             </form>

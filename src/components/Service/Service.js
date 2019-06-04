@@ -72,16 +72,25 @@ const service = (props) => {
                     </select>
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'0.01'}
+                        maxLength={'10'}
                         placeholder={'Service Price'}
                         onChange={props.servicePriceHandler}
                     />
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'1'}
+                        maxLength={'10'}
                         placeholder={'Service Odometer'}
                         onChange={props.serviceOdometerHandler}
                     />
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'1'}
+                        maxLength={'10'}
                         placeholder={'Next Oil Reminder'}
                         onChange={props.nextOilReminderHandler}
                     />

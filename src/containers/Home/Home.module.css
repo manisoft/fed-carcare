@@ -1,3 +1,18 @@
 .Home{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.header{
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.unit{
+    font-size: .8rem;
+    font-weight: 400;
+}
+
+.amount{
+    font-weight: bold;
+    font-size: 1.4rem;
 }

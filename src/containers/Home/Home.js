@@ -26,6 +26,32 @@ class Home extends Component {
         wiperFluidService: false,
     }
 
+    componentDidMount() {
+        const config = {
+            headers: { 'Authorization': 'Bearer ' + this.props.token }
+        }
+        axios.get('https://carcarepwa.herokuapp.com/refuel/query/userId', config)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    getLatestRefuel = () => {
+        const config = {
+            headers: { 'Authorization': 'Bearer ' + this.props.token }
+        }
+        axios.get('https://carcarepwa.herokuapp.com/refuel/query/userId', config)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     refuel = (event) => {
         event.preventDefault();
         this.props.history.push('/home/refuel');
@@ -50,6 +76,7 @@ class Home extends Component {
         }
         axios.post('https://carcarepwa.herokuapp.com/refuel', refuel, config)
             .then(res => {
+                this.getLatestRefuel();
                 this.props.history.push('/home');
             })
             .catch(err => {
@@ -254,15 +281,23 @@ class Home extends Component {
         });
     }
 
+    averageCalculator = () => {
+
+    }
+
     render() {
         const carname = this.props.name;
         const carmodel = this.props.model;
         const yearOfBuild = this.props.yearOfBuild;
         let page = (<div className={classes.Home}>
-            <div>
-                <span>{carname} - {carmodel} - {yearOfBuild}</span>
+            <div className={classes.header}>
+                {carname} - {carmodel} | {yearOfBuild}
             </div>
-            <div>Average Fuel Consumption per 100 Km</div>
+            <div>Average Fuel Consumption</div>
+            <div>
+                <span className={classes.amount}>6.8 </span>
+                <span className={classes.unit}>litre/100 Km</span>
+            </div>
             <div>Average Cost Per Month (Fuel & Service)</div>
             <span>
                 <button onClick={this.refuel}>Refuel</button>

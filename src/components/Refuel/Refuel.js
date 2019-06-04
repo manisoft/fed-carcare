@@ -18,16 +18,25 @@ const refuel = (props) => {
                 <form className={classes.form} onSubmit={props.refuelHandler}>
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'0.1'}
+                        maxLength={'3'}
                         placeholder={'Fuel Amount (Litre)'}
                         onChange={props.fuelAmountHandler}
                     />
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'0.01'}
+                        maxLength={'10'}
                         placeholder={'Fuel Price'}
                         onChange={props.fuelPriceHandler}
                     />
                     <Textbox
                         type={'number'}
+                        min={'0'}
+                        step={'1'}
+                        maxLength={'10'}
                         placeholder={'Refuel Odometer'}
                         onChange={props.refuelOdometerHandler}
                     />
