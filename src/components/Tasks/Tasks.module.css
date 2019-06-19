@@ -1,0 +1,25 @@
+.Tasks{
+    display: flex;
+}
+.div_refuelBtn{
+    background-color: aqua;
+    flex: 1;
+    margin: 7px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: darkslategrey;
+    font-weight: bold;
+}
+.div_oilBtn{
+    background-color: rgb(189, 199, 44);
+    flex: 1;
+    margin: 7px;
+    border-radius: 7px;
+    cursor: pointer;
+    color: darkslategrey;
+    font-weight: bold;
+}
+.fuelBtn{
+    width: 48px;
+    height: auto;
+}

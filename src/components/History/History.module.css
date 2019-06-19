@@ -1,0 +1,35 @@
+.header{
+    background-color: darkgray;
+    color: white;
+    font-size: .8rem;
+    font-weight: lighter;
+    display: flex;
+}
+.refuel{
+    flex: 1;
+}
+.litre{
+    flex: 1;
+}
+.odometer{
+    flex: 1;
+}
+.histories{
+    background-color: rgb(240, 240, 240);
+    color: rgb(70, 70, 70);
+    font-size: .8rem;
+    display: flex;
+}
+.unit{
+    color: gray;
+}
+.amount{
+    color: black;
+    font-weight: bold;
+    font-size: .9rem
+}
+.history{
+    color: rgb(70, 70, 70);
+    font-size: .8rem;
+    display: flex;
+}

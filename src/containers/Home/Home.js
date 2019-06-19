@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
-import classes from './Home.module.css';
 import Refuel from '../../components/Refuel/Refuel';
 import Service from '../../components/Service/Service';
 import axios from 'axios';
+import Header from '../../components/Header/Header';
+import Average from '../../components/Average/Average';
+import History from '../../components/History/History';
+import LastCheck from '../../components/LastCheck/LastCheck';
+import Tasks from '../../components/Tasks/Tasks';
 
 class Home extends Component {
 
@@ -24,6 +28,19 @@ class Home extends Component {
         batteryService: false,
         gearboxOilService: false,
         wiperFluidService: false,
+        avgFuel: 0,
+        avgCost: 0,
+        historyDays: [0, 0, 0, 0],
+        historyAmount: [0, 0, 0, 0],
+        historyOdometer: [0, 0, 0, 0],
+        lAirFilter: [0, 0],
+        lOilFilter: [0, 0],
+        lBattery: [0, 0],
+        lRadiator: [0, 0],
+        lGearbox: [0, 0],
+        lWiper: [0, 0],
+        lGasoline: [0, 0],
+        lOil: [0, 0]
     }
 
     componentDidMount() {
@@ -32,11 +49,49 @@ class Home extends Component {
         }
         axios.get('https://carcarepwa.herokuapp.com/refuel/query/userId', config)
             .then(res => {
-                console.log(res.data);
+                this.historyDaysCalculator(res.data);
+                this.historyAmountCalculator(res.data);
+                this.historyOdometerCalculator(res.data);
+                if (res.data.length >= 2) {
+                    this.avgFuelCalculator(res.data);
+                    this.avgCostCalculator(res.data);
+                }
             })
             .catch(err => {
                 console.log(err);
+            });
+        axios.get('https://carcarepwa.herokuapp.com/service/query/userId', config)
+            .then(res => {
+                res.data.forEach(el => {
+                    if (el.airFilter) {
+                        this.lAirFilterCounter(res.data);
+                    }
+                    if (el.oilFilter) {
+                        this.lOilFilterCounter(res.data);
+                    }
+                    if (el.battery) {
+                        this.lBatteryCounter(res.data);
+                    }
+                    if (el.radiator) {
+                        this.lRadiatorCounter(res.data);
+                    }
+                    if (el.gearboxOil) {
+                        this.lGearboxCounter(res.data);
+                    }
+                    if (el.wiperFluid) {
+                        this.lWiperCounter(res.data);
+                    }
+                    if (el.engineOil) {
+                        this.lOilCounter(res.data);
+                    }
+                    if (this.state.historyAmount[0] > 0) {
+                        this.lGasolineCounter();
+                    }
+                });
             })
+            .catch(err => {
+                console.log(err);
+            });
     }
 
     getLatestRefuel = () => {
@@ -281,29 +336,262 @@ class Home extends Component {
         });
     }
 
-    averageCalculator = () => {
+    avgFuelCalculator = (dataArr) => {
+        if (dataArr.length > 0) {
+            const average = [];
+            for (let i = 0; i < dataArr.length - 1; i++) {
+                average.push((dataArr[i + 1].odometer - dataArr[i].odometer) / (dataArr[i].gasoline));
+            }
+            const fuelAvg = this.arrAvgCalculator(average).toFixed(2);
+            this.setState({
+                ...this.state,
+                avgFuel: fuelAvg
+            });
+        }
+    }
 
+    arrAvgCalculator = arr => arr.reduce((a, b) => a + b, 0) / arr.length
+
+    avgCostCalculator = (data) => {
+        if (data.length > 0) {
+            const position = data.length - 1;
+            var fd = new Date(data[0].date);
+            var sd = new Date(data[position].date);
+            const days = this.dayDiffCalculator(fd, sd);
+            let totalCost = 0;
+            const priceArr = [];
+            data.forEach(el => {
+                priceArr.push(el.price);
+            });
+
+            priceArr.forEach(el => {
+                totalCost = totalCost + el;
+            })
+            const cost = (totalCost * 30 / days).toFixed(0);
+            this.setState({
+                ...this.state,
+                avgCost: cost
+            });
+        }
+    }
+
+    dayDiffCalculator = (firstDate, secondDate) => {
+        const oneDay = 24 * 60 * 60 * 1000;
+        return Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+    }
+
+    historyDaysCalculator = (data) => {
+        const days = [];
+        for (let i = 0; i < data.length; i++) {
+            days.push(this.dayDiffCalculator(new Date(data[i].date), new Date()));
+        }
+        const hisday = days.reverse().slice(0, 4);
+        this.setState({
+            ...this.props,
+            historyDays: hisday
+        })
+    }
+
+    historyAmountCalculator = (data) => {
+        const amount = [];
+        for (let i = 0; i < data.length; i++) {
+            amount.push(data[i].gasoline);
+        }
+        const hisAmount = amount.reverse().slice(0, 4);
+        this.setState({
+            ...this.props,
+            historyAmount: hisAmount
+        })
+    }
+
+    historyOdometerCalculator = (data) => {
+        const odo = [];
+        for (let i = 0; i < data.length; i++) {
+            odo.push(data[i].odometer);
+        }
+        const hisOdometer = odo.reverse().slice(0, 4);
+        this.setState({
+            ...this.props,
+            historyOdometer: hisOdometer
+        })
+    }
+
+    lAirFilterCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.airFilter === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lAirFilter: [lmonths, ldays]
+        });
+    }
+
+    lOilFilterCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.oilFilter === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lOilFilter: [lmonths, ldays]
+        });
+    }
+
+    lBatteryCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.battery === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lBattery: [lmonths, ldays]
+        });
+    }
+
+    lRadiatorCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.radiator === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lRadiator: [lmonths, ldays]
+        });
+    }
+
+    lGearboxCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.gearboxOil === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lGearbox: [lmonths, ldays]
+        });
+    }
+
+    lWiperCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.wiperFluid === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lWiper: [lmonths, ldays]
+        });
+    }
+
+    lGasolineCounter = () => {
+        let days = this.state.historyDays[0];
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lGasoline: [lmonths, ldays]
+        });
+    }
+
+    lOilCounter = (data) => {
+        const dateArr = [];
+        data.forEach(el => {
+            if (el.engineOil === true) {
+                dateArr.push(el.date);
+            }
+        });
+        const sorted = dateArr.sort(function (a, b) {
+            return new Date(b) - new Date(a);
+        });
+        let days = this.dayDiffCalculator(new Date(sorted[0]), new Date());
+        const lmonths = Math.floor(days / 30);
+        const ldays = days % 30;
+        this.setState({
+            ...this.state,
+            lOil: [lmonths, ldays]
+        });
     }
 
     render() {
-        const carname = this.props.name;
-        const carmodel = this.props.model;
-        const yearOfBuild = this.props.yearOfBuild;
-        let page = (<div className={classes.Home}>
-            <div className={classes.header}>
-                {carname} - {carmodel} | {yearOfBuild}
-            </div>
-            <div>Average Fuel Consumption</div>
+        let page = (
             <div>
-                <span className={classes.amount}>6.8 </span>
-                <span className={classes.unit}>litre/100 Km</span>
-            </div>
-            <div>Average Cost Per Month (Fuel & Service)</div>
-            <span>
-                <button onClick={this.refuel}>Refuel</button>
-                <button onClick={this.service}>Service</button>
-            </span>
-        </div>)
+                <Header
+                    model={this.props.model}
+                    name={this.props.name}
+                    yob={this.props.yearOfBuild}
+                />
+                <Average
+                    avgFuel={this.state.avgFuel}
+                    avgCost={this.state.avgCost}
+                />
+                <History
+                    historyDays={this.state.historyDays}
+                    historyAmount={this.state.historyAmount}
+                    historyOdometer={this.state.historyOdometer}
+                />
+                <LastCheck
+                    lAirFilter={this.state.lAirFilter}
+                    lOilFilter={this.state.lOilFilter}
+                    lBattery={this.state.lBattery}
+                    lRadiator={this.state.lRadiator}
+                    lGearbox={this.state.lGearbox}
+                    lWiper={this.state.lWiper}
+                    lGasoline={this.state.lGasoline}
+                    lOil={this.state.lOil}
+                />
+                <Tasks
+                    refuel={this.refuel}
+                    service={this.service}
+                />
+            </div >
+        )
         if (this.props.location.pathname === '/home/service') {
             page = <Service
                 serviceHandler={this.serviceHandler}

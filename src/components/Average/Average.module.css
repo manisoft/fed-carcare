@@ -1,0 +1,46 @@
+.fuel{
+    padding-top: 7px;
+    font-size: 1.2rem;
+    font-weight: lighter;
+    color: gray;
+    background-color:rgb(240, 240, 240);
+    padding-bottom: 7px;
+}
+.litre{
+    font-size: 3rem;
+    font-weight: bold;
+}
+.unit{
+    font-size: .8rem;
+    font-weight: lighter;
+    color: gray;
+}
+.avg{
+    display: flex;
+}
+.avg_price_month{
+    flex: 1;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.avg_price_day{
+    flex: 1;
+    font-size: 2rem;
+    font-weight: bold;
+}
+.avgunit{
+    display: flex;
+    padding-bottom: 7px;
+}
+.unit_month{
+    flex: 1;
+    font-size: .8rem;
+    font-weight: lighter;
+    color: gray;
+}
+.unit_day{
+    flex: 1;
+    font-size: .8rem;
+    font-weight: lighter;
+    color: gray;
+}
