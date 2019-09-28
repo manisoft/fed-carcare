@@ -2,10 +2,14 @@ import React from 'react';
 import classes from './Refuel.module.css';
 import { withRouter } from 'react-router-dom';
 import Textbox from '../../UI/textbox/Textbox';
-import Button from '../../UI/button/Button';
-import gasIcon from '../../assets/images/gas.svg';
+//import Button from '../../UI/button/Button';
+import gasIcon from '../../assets/images/fuel-counter.svg';
 import backIcon from '../../assets/images/back.svg';
-import Logo from '../Logo/Logo';
+import {
+    PrimaryButton, Toggle
+} from 'office-ui-fabric-react';
+
+
 
 
 const refuel = (props) => {
@@ -14,7 +18,6 @@ const refuel = (props) => {
             <div>
                 <img onClick={props.history.goBack} className={classes.back} src={backIcon} alt="Back to Home" />
                 <img src={gasIcon} alt="Refuel" className={classes.gas} />
-                <Logo />
                 <form className={classes.form} onSubmit={props.refuelHandler}>
                     <Textbox
                         type={'number'}
@@ -44,18 +47,28 @@ const refuel = (props) => {
                         type={'date'}
                         onChange={props.refuelDateHandler}
                     />
-                    <span>
+                    {/* <span>
                         <input
                             type='checkbox'
                             value='false'
                             onChange={props.isfullHandler}
                         />is Full
-                    </span>
-
+                    </span> */}
+                    <Toggle
+                        label="The tank get's full after refuel"
+                        inlineLabel
+                        onChange={props.isfullHandler}
+                        className={classes.toggle}
+                    />
+                    {/* 
                     <Button
                         type={'submit'}
                         label={'Refuel Done'}
-                    />
+                    /> */}
+                    <PrimaryButton
+                        className={classes.btn}
+                        type='submit'
+                    >Refuel</PrimaryButton>
                 </form>
             </div>
         </div>

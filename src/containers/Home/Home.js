@@ -8,6 +8,7 @@ import History from '../../components/History/History';
 import LastCheck from '../../components/LastCheck/LastCheck';
 import Tasks from '../../components/Tasks/Tasks';
 
+
 class Home extends Component {
 
     state = {
@@ -47,6 +48,7 @@ class Home extends Component {
         const config = {
             headers: { 'Authorization': 'Bearer ' + this.props.token }
         }
+
         axios.get('https://carcarepwa.herokuapp.com/refuel/query/userId', config)
             .then(res => {
                 this.historyDaysCalculator(res.data);
@@ -60,6 +62,7 @@ class Home extends Component {
             .catch(err => {
                 console.log(err);
             });
+
         axios.get('https://carcarepwa.herokuapp.com/service/query/userId', config)
             .then(res => {
                 res.data.forEach(el => {
@@ -93,6 +96,61 @@ class Home extends Component {
                 console.log(err);
             });
     }
+
+    componentWillReceiveProps() {
+        const config = {
+            headers: { 'Authorization': 'Bearer ' + this.props.token }
+        }
+
+        axios.get('https://carcarepwa.herokuapp.com/refuel/query/userId', config)
+            .then(res => {
+                this.historyDaysCalculator(res.data);
+                this.historyAmountCalculator(res.data);
+                this.historyOdometerCalculator(res.data);
+                if (res.data.length >= 2) {
+                    this.avgFuelCalculator(res.data);
+                    this.avgCostCalculator(res.data);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+        axios.get('https://carcarepwa.herokuapp.com/service/query/userId', config)
+            .then(res => {
+                res.data.forEach(el => {
+                    if (el.airFilter) {
+                        this.lAirFilterCounter(res.data);
+                    }
+                    if (el.oilFilter) {
+                        this.lOilFilterCounter(res.data);
+                    }
+                    if (el.battery) {
+                        this.lBatteryCounter(res.data);
+                    }
+                    if (el.radiator) {
+                        this.lRadiatorCounter(res.data);
+                    }
+                    if (el.gearboxOil) {
+                        this.lGearboxCounter(res.data);
+                    }
+                    if (el.wiperFluid) {
+                        this.lWiperCounter(res.data);
+                    }
+                    if (el.engineOil) {
+                        this.lOilCounter(res.data);
+                    }
+                    if (this.state.historyAmount[0] > 0) {
+                        this.lGasolineCounter();
+                    }
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
+    }
+
 
     getLatestRefuel = () => {
         const config = {

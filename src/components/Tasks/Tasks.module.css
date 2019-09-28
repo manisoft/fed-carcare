@@ -2,24 +2,31 @@
     display: flex;
 }
 .div_refuelBtn{
-    background-color: aqua;
+    background-color: #0078d4;
     flex: 1;
     margin: 7px;
-    border-radius: 7px;
+    padding: 7px;
+    border-radius: 2px;
     cursor: pointer;
-    color: darkslategrey;
-    font-weight: bold;
+    color: white;
+    font-weight: 500;
 }
 .div_oilBtn{
-    background-color: rgb(189, 199, 44);
+    background-color: #217346;
     flex: 1;
+    padding: 7px;
     margin: 7px;
-    border-radius: 7px;
+    border-radius: 2px;
     cursor: pointer;
-    color: darkslategrey;
-    font-weight: bold;
+    color: white;
+    font-weight: 500;
 }
 .fuelBtn{
+    width: 59px;
+    height: auto;
+}
+
+.serviceBtn{
     width: 48px;
     height: auto;
 }

@@ -7,6 +7,10 @@ import axios from 'axios';
 import Cardata from '../../components/Cardata/Cardata';
 import Home from '../Home/Home';
 import Admin from '../Admin/Admin';
+import { initializeIcons } from '@uifabric/icons';
+import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
+
+initializeIcons();
 //import { connect } from 'react-redux';
 //import { getCarData } from '../../store/actions';
 
@@ -21,11 +25,13 @@ class App extends Component {
     email: '',
     password: '',
     passwordc: '',
-    token: ''
+    token: '',
+    loading: false
   }
 
   signInHandler = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const user = {
       email: this.state.email,
       password: this.state.password
@@ -41,6 +47,7 @@ class App extends Component {
         }
         axios.get('https://carcarepwa.herokuapp.com/cardata/query/user', config)
           .then(res => {
+            this.setState({ loading: false });
             if (res.data.length > 0) {
               this.setState({
                 ...this.state,
@@ -56,16 +63,19 @@ class App extends Component {
             }
           })
           .catch(err => {
+            this.setState({ loading: false });
             console.log(err);
           })
       })
       .catch(err => {
+        this.setState({ loading: false });
         console.log(err);
       })
   }
 
   signUpHandler = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     if (this.state.password === this.state.passwordc) {
       const user = {
         email: this.state.email,
@@ -73,10 +83,11 @@ class App extends Component {
       }
       axios.post('https://carcarepwa.herokuapp.com/user/signup', user)
         .then(res => {
-          console.log(res.data.message);
+          this.setState({ loading: false });
           this.props.history.push('/signin');
         })
         .catch(err => {
+          this.setState({ loading: false });
           console.log(err);
         })
     } else {
@@ -86,6 +97,7 @@ class App extends Component {
 
   carDataHandler = (event) => {
     event.preventDefault();
+    this.setState({ loading: true });
     const config = {
       headers: { 'Authorization': 'Bearer ' + this.state.token }
     }
@@ -98,10 +110,11 @@ class App extends Component {
     }
     axios.post('https://carcarepwa.herokuapp.com/cardata', cardata, config)
       .then(res => {
-        console.log(res);
+        this.setState({ loading: false });
         this.props.history.push('/home');
       })
       .catch(err => {
+        this.setState({ loading: false });
         console.log(err);
       })
   }
@@ -180,30 +193,43 @@ class App extends Component {
           />
           <Route
             path='/signin'
-            render={() => (<Signin
-              signInHandler={this.signInHandler}
-              emailHandler={this.emailHandler}
-              passwordHandler={this.passwordHandler}
-            />)}
+            render={() => (
+              (this.state.loading) ?
+                <Spinner size={SpinnerSize.large} className={classes.spin} />
+                :
+                <Signin
+                  signInHandler={this.signInHandler}
+                  emailHandler={this.emailHandler}
+                  passwordHandler={this.passwordHandler}
+                />
+            )}
           />
-          <Route path='/cardata' render={() => (<Cardata
-            nameHandler={this.nameHandler}
-            modelHandler={this.modelHandler}
-            yrbHandler={this.yrbHandler}
-            capacityHandler={this.capacityHandler}
-            odometerHandler={this.odometerHandler}
-            carDataHandler={this.carDataHandler}
-          />)} />
+          <Route path='/cardata' render={() => (
+            (this.state.loading) ?
+              <Spinner size={SpinnerSize.large} className={classes.spin} />
+              :
+              <Cardata
+                nameHandler={this.nameHandler}
+                modelHandler={this.modelHandler}
+                yrbHandler={this.yrbHandler}
+                capacityHandler={this.capacityHandler}
+                odometerHandler={this.odometerHandler}
+                carDataHandler={this.carDataHandler}
+              />)} />
           <Route path='/admin' component={Admin} />
-          <Route path='/home' render={() => (<Home
-            {...this.props}
-            name={this.state.name}
-            model={this.state.model}
-            yearOfBuild={this.state.yearOfBuild}
-            odometer={this.state.odometer}
-            gasolineCapacity={this.state.gasolineCapacity}
-            token={this.state.token}
-          />)} />
+          <Route path='/home' render={() => (
+            (this.state.loading) ?
+              <Spinner size={SpinnerSize.large} className={classes.spin} />
+              :
+              <Home
+                {...this.props}
+                name={this.state.name}
+                model={this.state.model}
+                yearOfBuild={this.state.yearOfBuild}
+                odometer={this.state.odometer}
+                gasolineCapacity={this.state.gasolineCapacity}
+                token={this.state.token}
+              />)} />
         </Switch>
       </div>
     );

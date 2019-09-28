@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './Textbox.module.css';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 const textbox = (props) => {
     return (
-        <input
+        <TextField
             className={classes.Textbox}
             type={props.type}
             min={props.min}
@@ -13,7 +14,7 @@ const textbox = (props) => {
             placeholder={props.placeholder}
             onChange={props.onChange}
             required
-        >{props.label}</input>
+        >{props.label}</TextField>
     );
 }
 

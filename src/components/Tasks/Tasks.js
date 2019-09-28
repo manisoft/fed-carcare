@@ -11,7 +11,7 @@ const tasks = (props) => {
                 <div>Refuel</div>
             </div>
             <div className={classes.div_oilBtn} onClick={props.service}>
-                <img src={oil} alt='refuel' className={classes.fuelBtn} />
+                <img src={oil} alt='refuel' className={classes.serviceBtn} />
                 <div>Service</div>
             </div>
         </div>

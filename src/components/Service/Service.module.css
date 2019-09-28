@@ -2,31 +2,64 @@
     width: 80%;
     margin: auto;
     margin-top: 10px;
+    display: flexbox;
+    text-align: left;
 }
 
 .form{
     display: flex;
     flex-direction: column;
+    margin-top: 5%;
+}
+
+.toggle_area{
+    margin-left: 5%;
+}
+
+.divall{
+    display: flex;
+    flex-direction: row;
+}
+
+.divleft{
+    flex: 1;
+}
+
+.divright{
+    flex: 1;
 }
 
 .back{
     cursor: pointer;
-    width: 75px;
+    width: 55px;
     height: auto;
 }
 
 .oil{
-    width: 75px;
+    width: 65px;
     height: auto;
+    float: right;
 }
 
-.select option{
+.btn{
+    margin-top: 1.2rem;
+}
+
+.sc{
+    margin-bottom: .35rem;
+    margin-top: .35rem;
+}
+
+.select{
     height: 1.2rem;
-    border-radius: 4px;
-    border-color:lightgray;
-    border-style: solid;
-    padding: 7px;
-    font-size: 1.1rem;
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    padding-left: 4px;
+    font-size: .9rem;
+    height: 32px;
+    color: rgb(99, 99, 99);
+    border-color: rgb(138, 136, 134);
+    border-radius: 2px;
     margin-bottom: .35rem;
     margin-top: .35rem;
 }
